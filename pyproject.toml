@@ -1,0 +1,56 @@
+[project]
+name = "nlp-course-hw1"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "accelerate>=1.15.0",
+    "datasets>=5.1.0",
+    "evaluate>=0.4.6",
+    "gdown>=6.5.1",
+    "ipykernel>=7.4.0",
+    "ipywidgets>=8.1.9",
+    "matplotlib>=3.11.2",
+    "nltk>=3.10.4",
+    "scikit-learn>=1.9.1",
+    "transformers[torch]>=5.22.1",
+]
+
+
+[project.optional-dependencies]
+cpu = [
+    "torch",
+    "torchvision",
+]
+cu130 = [
+    "torch",
+    "torchvision",
+]
+
+[tool.uv]
+# Ensures uv locks cpu and cu130 in parallel without resolution conflicts
+conflicts = [
+    [
+        { extra = "cpu" },
+        { extra = "cu130" },
+    ],
+]
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu", extra = "cpu" },
+    { index = "pytorch-cu130", extra = "cu130" },
+]
+torchvision = [
+    { index = "pytorch-cpu", extra = "cpu" },
+    { index = "pytorch-cu130", extra = "cu130" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
